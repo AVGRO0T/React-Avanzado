@@ -6,7 +6,7 @@ import { configureClient } from './api/client';
 import storage from './utils/storage';
 import './index.css';
 import App from './components/app';
-
+import { AuthProvider } from './components/auth/context';
 
 import { Provider } from 'react-redux';
 import configureStore from './store';
@@ -19,8 +19,10 @@ const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={storehead}>
-    <Router>   
+    <Router>
+      <AuthProvider isInitiallyLogged={!!accessToken}>
         <App />
+      </AuthProvider>
     </Router>
     </Provider>
   </React.StrictMode>,
