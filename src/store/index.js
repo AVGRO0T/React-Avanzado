@@ -4,10 +4,10 @@ import thunk from 'redux-thunk';
 
 import * as reducers from './reducers';
 import * as auth from '../components/auth/service';
-
+import * as adverts from '../components/adverts/service'
 
 const middlewares = [
-  thunk.withExtraArgument({ api: { auth } }),
+  thunk.withExtraArgument({ api: { auth, adverts } }),
 ];
 
 const reducer = combineReducers(reducers);

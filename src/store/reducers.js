@@ -1,8 +1,6 @@
-import {AUTH_LOGIN_REQUEST, 
+import {
+  ADVERTS_LOADED_SUCCESS,
         AUTH_LOGIN_SUCCESS,
-        AUTH_LOGIN_FAILURE,
-        AUTH_LOGOUT_FAILURE,
-        AUTH_LOGOUT_REQUEST,
         AUTH_LOGOUT_SUCCESS,
         UI_RESET_ERROR,
 } from './types';
@@ -11,12 +9,16 @@ import {AUTH_LOGIN_REQUEST,
 
 const defaultState = {
     auth: false,
+    adverts:{
+      areLoaded: false,
+      data: [],
+    },
     ui: {
       isLoading: false,
       error: null,
     },
 };
-
+//AUTH
 export function auth(state = defaultState.auth, action) {
   switch (action.type) {
     case AUTH_LOGIN_SUCCESS:
@@ -27,7 +29,14 @@ export function auth(state = defaultState.auth, action) {
       return state;
   }
 }
-
+//ADVERTS 
+export function adverts(state = defaultState.adverts,action) {
+  if (action.type === ADVERTS_LOADED_SUCCESS){
+    return {areLoaded: true, data: action.payload };
+  }
+  return state;
+}
+//UI
 export function ui(state = defaultState.ui, action) {
   if (action.error) {
     return {

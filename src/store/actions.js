@@ -1,3 +1,5 @@
+import { adverts } from './reducers';
+import { areLoadedAdverts } from './selectors';
 import {AUTH_LOGIN_REQUEST, 
     AUTH_LOGIN_SUCCESS,
     AUTH_LOGIN_FAILURE,
@@ -52,5 +54,37 @@ export const authLogout = () => {
   export const uiResetError = () => ({
     type: UI_RESET_ERROR,
   });
+
+// ADVERTS ACTIONS
+export const advertsLoadedSucces = (adverts) => ({
+  type: ADVERTS_LOADED_SUCCESS,
+  payload: adverts,
+});
+export const advertsLoadedFailure = error => ({
+  type: ADVERTS_LOADED_FAILURE,
+  payload: error,
+  error: true,
+});
+export const advertsLoadedRequest = () => ({
+  type: ADVERTS_LOADED_REQUEST,
+ 
+}); 
+
+export const advertsLoad = () => {
+  return async function (dispatch, getState, { api }) {
+    const areLoaded = areLoadedAdverts(getState());
+    if (areLoaded) return;
+
+    try {
+      dispatch(advertsLoadedRequest());
+      const adverts = await api.adverts.getAdverts();
+      dispatch(advertsLoadedSucces(adverts));
+    } catch (error) {
+      dispatch(advertsLoadedFailure(error));
+    }
+  };
+};
+
+//FILTER ACTIONS
 
   

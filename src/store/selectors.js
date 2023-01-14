@@ -4,4 +4,7 @@ export const getUi = state => state.ui;
 
 export const getFilters = state => state.filters;
 
-export const getadverts = state => state.adverts;
+export const getAdvertsSelector = state => 
+    state.adverts.areLoaded ? state.adverts.data : [];
+
+export const areLoadedAdverts = state => state.adverts.areLoaderd;
