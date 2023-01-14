@@ -6,8 +6,10 @@ import {AUTH_LOGIN_REQUEST,
     ADVERTS_LOADED_SUCCESS,
     ADVERTS_LOADED_REQUEST,
     ADVERTS_LOADED_FAILURE,
+    AUTH_LOGOUT_REQUEST,
+    AUTH_LOGOUT_FAILURE,
 } from './types';
-//AUTH ACTIONS 
+//AUTH  LOGIN ACTIONS 
 export const authLoginSuccess = () => ({
     type: AUTH_LOGIN_SUCCESS,
   });
@@ -22,14 +24,6 @@ export const authLoginFailure = error => ({
     error: true,
   });
   
-export const authLogoutSuccess = () => ({
-    type: AUTH_LOGOUT_SUCCESS,
-  });
-
-  export const uiResetError = () => ({
-    type: UI_RESET_ERROR,
-  });
-
   export const authLogin = credentials => {
     return async function (dispatch, getState, { api }) {
       try {
@@ -42,4 +36,21 @@ export const authLogoutSuccess = () => ({
       }
     };
   };
+//AUTH LOGOUT ATIONS
+export const authLogoutSuccess = () => ({
+    type: AUTH_LOGOUT_SUCCESS,
+  });
+
+export const authLogout = () => {
+    return async function (dispatch, getState, { api }) {
+      await api.auth.logout();
+      dispatch(authLogoutSuccess());
+    };
+  };
+
+// UI ACTIONS
+  export const uiResetError = () => ({
+    type: UI_RESET_ERROR,
+  });
+
   

@@ -1,10 +1,11 @@
 import T from 'prop-types';
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { getIsLogged } from '../../../store/selectors';
 
-import { useAuthContext } from '../context';
 
 const RequireAuth = ({ children }) => {
-  const { isLogged } = useAuthContext();
+  const  isLogged  = useSelector(getIsLogged);
   const location = useLocation();
 
   if (!isLogged) {
