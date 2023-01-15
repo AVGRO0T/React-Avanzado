@@ -16,6 +16,7 @@ import {AUTH_LOGIN_REQUEST,
     NEW_ADVERTS_LOADED_FAILURE,
     NEW_ADVERTS_LOADED_SUCCESS,
     NEW_ADVERTS_LOADED_REQUEST,
+    DELETE_ADVERT_SUCCESS,
     
 } from './types';
 //AUTH  LOGIN ACTIONS 
@@ -35,6 +36,7 @@ export const authLoginFailure = error => ({
   
   export const authLogin = credentials => {
     return async function (dispatch, getState, { api, router }) {
+      
       try {
         dispatch(authLoginRequest());
         await api.auth.login(credentials);
@@ -119,6 +121,7 @@ export const tagsLoad = () => {
   
   export const advertsLoad = () => {
     return async function (dispatch, getState, { api }) {
+
       const areLoaded = areLoadedAdverts(getState());
       if (areLoaded) return;
   
@@ -161,6 +164,25 @@ export const tagsLoad = () => {
     };
   };
 
+  //DELETE ADVERT ACTIONS 
+
+  export const deleteAdvertSuccess = (advert) => ({
+    type: DELETE_ADVERT_SUCCESS,
+    payload: advert,
+  })
+
+  export const deleteAdvert = advertId => {
+    return async function (dispatch, getState, { api, router }) {
+    
+      try {
+        const advert = await api.adverts.deleteAdvert(advertId);
+        dispatch(deleteAdvertSuccess(advert));
+        router.navigate('/')
+      } catch (error) {
+        dispatch(advertLoadedFailure(error));
+      }
+    };
+  }
 
   //NEW ADVERTS ACTIONS 
 

@@ -3,6 +3,7 @@ import {
   ADVERT_LOADED_SUCCESS,
         AUTH_LOGIN_SUCCESS,
         AUTH_LOGOUT_SUCCESS,
+       DELETE_ADVERT_SUCCESS,
        NEW_ADVERTS_LOADED_SUCCESS,
        TAGS_LOADED_SUCCESS,
         UI_RESET_ERROR,
@@ -48,6 +49,9 @@ export function adverts(state = defaultState.adverts,action) {
   }
   if (action.type === NEW_ADVERTS_LOADED_SUCCESS){
     return { ...state, data: [action.payload, ...state.data] };
+  }
+  if (action.type === DELETE_ADVERT_SUCCESS){
+    return { state, data:action.payload };
   }
   return state;
 }

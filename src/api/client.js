@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 
 const client = axios.create({
   baseURL: `${process.env.REACT_APP_API_BASE_URL}/api`,
@@ -24,12 +25,12 @@ client.interceptors.response.use(
       ...error.response.data,
     });
   },
-);
-
-export const configureClient = ({ accessToken }) => {
-  if (accessToken) {
-    setAuthorizationHeader(accessToken);
-  }
+  );
+  
+  export const configureClient = ({ accessToken }) => {
+    if (accessToken) {
+      setAuthorizationHeader(accessToken);
+    }
 };
 
 export const resetClient = () => {

@@ -10,8 +10,12 @@ import Root from './root';
 
 import configureStore from './store';
 
+
 const accessToken = storage.get('auth');
+
 configureClient({ accessToken });
+
+
 
 const router = createBrowserRouter([
   {
@@ -19,8 +23,9 @@ const router = createBrowserRouter([
     element: <App />,
   },
 ]);
-const storehead = configureStore({ auth: !!accessToken }, { router });
+const store = configureStore({ auth: !!accessToken }, { router });
 const root = ReactDOM.createRoot(document.getElementById('root'));
+console.log (store)
 root.render(
-      <Root store={storehead} router={router} />
+      <Root store={store} router={router} />
 );
