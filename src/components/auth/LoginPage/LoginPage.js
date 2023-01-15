@@ -19,10 +19,7 @@ function LoginPage() {
  const resetErrorr = () => dispatch(uiResetError());
   const handleSubmit = async credentials =>  {
    dispatch(authLogin(credentials))
-   .then(() => {
-        const from = location.state?.from?.pathname || '/';
-        navigate(from, { replace: true });
-      })
+  
      
   };
 

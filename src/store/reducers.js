@@ -2,6 +2,7 @@ import {
   ADVERTS_LOADED_SUCCESS,
         AUTH_LOGIN_SUCCESS,
         AUTH_LOGOUT_SUCCESS,
+       NEW_ADVERTS_LOADED_SUCCESS,
        TAGS_LOADED_SUCCESS,
         UI_RESET_ERROR,
 } from './types';
@@ -40,6 +41,9 @@ export function auth(state = defaultState.auth, action) {
 export function adverts(state = defaultState.adverts,action) {
   if (action.type === ADVERTS_LOADED_SUCCESS){
     return {areLoaded: true, data: action.payload };
+  }
+  if (action.type === NEW_ADVERTS_LOADED_SUCCESS){
+    return { ...state, data: [action.payload, ...state.data] };
   }
   return state;
 }

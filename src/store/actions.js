@@ -1,5 +1,3 @@
-
-import { useEffect } from 'react';
 import { areLoadedAdverts, areLoadedTags } from './selectors';
 import {AUTH_LOGIN_REQUEST, 
     AUTH_LOGIN_SUCCESS,
@@ -9,9 +7,15 @@ import {AUTH_LOGIN_REQUEST,
     ADVERTS_LOADED_SUCCESS,
     ADVERTS_LOADED_REQUEST,
     ADVERTS_LOADED_FAILURE,
+    ADVERT_LOADED_SUCCESS,
+    ADVERT_LOADED_REQUEST,
+    ADVERT_LOADED_FAILURE,
     TAGS_LOADED_SUCCESS,
     TAGS_LOADED_FAILURE,
     TAGS_LOADED_REQUEST,
+    NEW_ADVERTS_LOADED_FAILURE,
+    NEW_ADVERTS_LOADED_SUCCESS,
+    NEW_ADVERTS_LOADED_REQUEST,
     
 } from './types';
 //AUTH  LOGIN ACTIONS 
@@ -30,11 +34,15 @@ export const authLoginFailure = error => ({
   });
   
   export const authLogin = credentials => {
-    return async function (dispatch, getState, { api }) {
+    return async function (dispatch, getState, { api, router }) {
       try {
         dispatch(authLoginRequest());
         await api.auth.login(credentials);
         dispatch(authLoginSuccess());
+        
+          const from = router.state.location.state?.from?.pathname || '/';
+          router.navigate(from, { replace: true });
+       
       } catch (error) {
         dispatch(authLoginFailure(error));
         throw error;
@@ -120,6 +128,52 @@ export const tagsLoad = () => {
         dispatch(advertsLoadedSucces(adverts));
       } catch (error) {
         dispatch(advertsLoadedFailure(error));
+      }
+    };
+  };
+
+  //ADVERT DATAIL ACTIONS 
+  export const advertLoadedSucces = (advert) => ({
+    type: ADVERT_LOADED_SUCCESS,
+    payload: advert,
+  });
+  export const advertLoadedFailure = error => ({
+    type: ADVERT_LOADED_FAILURE,
+    payload: error,
+    error: true,
+  });
+  export const advertLoadedRequest = () => ({
+    type: ADVERT_LOADED_REQUEST,
+   
+  }); 
+
+
+  //NEW ADVERTS ACTIONS 
+
+  export const newAdvertsLoadedSucces = (adverts) => ({
+    type: NEW_ADVERTS_LOADED_SUCCESS,
+    payload: adverts,
+  });
+  export const newAdvertsLoadedFailure = error => ({
+    type: NEW_ADVERTS_LOADED_FAILURE,
+    payload: error,
+    error: true,
+  });
+  export const newAdvertsLoadedRequest = () => ({
+    type: NEW_ADVERTS_LOADED_REQUEST
+  }); 
+
+  export const advertCreate = advert => {
+    return async function (dispatch, getState, { api, router }) {
+      try {
+        dispatch(newAdvertsLoadedRequest());
+        const { id } = await api.adverts.createAdvert(advert);
+        const createdAdvert = await api.adverts.getAdvert(id);
+        dispatch(newAdvertsLoadedSucces(createdAdvert));
+        router.navigate(`/adverts/${createdAdvert.id}`);
+        return createdAdvert;
+      } catch (error) {
+        dispatch(newAdvertsLoadedFailure(error));
       }
     };
   };
