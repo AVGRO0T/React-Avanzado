@@ -24,7 +24,7 @@ export function AdvertsPage ({ onAdvertsLoaded, adverts}) {
   }, [filters]);
   
   useEffect(() => {
-    if (!!accessToken){
+    if (!!accessToken){ // USADO PARA SABER SI HAY TOKEN EN EL STORAGE
       dispatch(authLoginSuccess());
     } 
     onAdvertsLoaded();

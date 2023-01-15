@@ -51,7 +51,7 @@ export const authLoginFailure = error => ({
       }
     };
   };
-//AUTH LOGOUT ATIONS
+//AUTH LOGOUT ACTIONS
 export const authLogoutSuccess = () => ({
     type: AUTH_LOGOUT_SUCCESS,
   });

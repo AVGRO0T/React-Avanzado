@@ -11,9 +11,8 @@ function LoginPage() {
   const { isLoading, error } = useSelector(getUi);
  const resetErrorr = () => dispatch(uiResetError());
   const handleSubmit = async credentials =>  {
-   dispatch(authLogin(credentials))
-  
-     
+    console.log(credentials)   
+   dispatch(authLogin(credentials)) 
   };
 
   return (

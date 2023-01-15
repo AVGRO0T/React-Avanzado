@@ -11,7 +11,7 @@ import {
 
 
 
-const defaultState = {
+export const defaultState = {
     auth: false,
     adverts:{
       areLoaded: false,
