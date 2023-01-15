@@ -25,12 +25,12 @@ function AdvertPage() {
       unmounteRef.current = true;
     };
   }, []);
-/*   const mutation = useMutation(deleteAdvert);
+  const mutation = useMutation(deleteAdvert);
   
   
   const handleDelete = () => {
     mutation.execute(advertId).then(() => navigate('/'));
-  }; */
+  }; 
 
   if (isLoading) {
     return 'Loading...';
@@ -39,7 +39,7 @@ function AdvertPage() {
   return (
     advert && (
       <AdvertDetail
-        onDelete={console.log("hola")}
+        onDelete={handleDelete}
         isLoading={isLoading}
         {...advert}
       />

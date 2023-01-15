@@ -17,7 +17,7 @@ state.tags.areLoaded ? state.tags.data : [];
 
 export const getAdvertSelector = advertId => state => {
   
-  return state.adverts.data.find(advert => advert.id === advertId) ;
+  return state.adverts.data.find(advert => advert.id.toString()  === advertId) ;
 }
 
 export const getUi = state => state.ui;
