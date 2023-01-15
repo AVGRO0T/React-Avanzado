@@ -4,9 +4,7 @@ import FiltersForm from './FiltersForm';
 import AdvertsList from './AdvertsList';
 import EmptyList from './EmptyList';
 import storage from '../../../utils/storage';
-import { getAdverts } from '../service';
 import { defaultFilters, filterAdverts } from './filters';
-import useQuery from '../../../hooks/useQuery';
 import { advertsLoad } from '../../../store/actions';
 import { connect, useSelector } from 'react-redux';
 import { getAdvertsSelector, getUi } from '../../../store/selectors';
@@ -17,13 +15,14 @@ const saveFilters = filters => storage.set('filters', filters);
 export function AdvertsPage ({ onAdvertsLoaded, adverts}) {
   const [filters, setFilters] = useState(getFilters);
   const { isLoading } = useSelector(getUi)
-
-  
  
   useEffect(() => {
     saveFilters(filters);
-    onAdvertsLoaded();
   }, [filters]);
+  
+  useEffect(() => {
+    onAdvertsLoaded();
+  },[]);
   
   const filteredAdverts = filterAdverts(adverts, filters);
 
@@ -52,10 +51,6 @@ export function AdvertsPage ({ onAdvertsLoaded, adverts}) {
 const mapStateToProps = (state, ownProps) => ({
   adverts: getAdvertsSelector(state),
 });
-
-// const mapDispatchToProps = (dispatch, ownProps) => ({
-//   onTweetsLoaded: tweets => dispatch(tweetsLoad(tweets)),
-// });
 
 const mapDispatchToProps = {
   onAdvertsLoaded: advertsLoad,

@@ -2,6 +2,7 @@ import {
   ADVERTS_LOADED_SUCCESS,
         AUTH_LOGIN_SUCCESS,
         AUTH_LOGOUT_SUCCESS,
+       TAGS_LOADED_SUCCESS,
         UI_RESET_ERROR,
 } from './types';
 
@@ -13,11 +14,16 @@ const defaultState = {
       areLoaded: false,
       data: [],
     },
+    tags: {
+      areLoaded: false, 
+      data:[],
+    },
     ui: {
       isLoading: false,
       error: null,
     },
 };
+
 //AUTH
 export function auth(state = defaultState.auth, action) {
   switch (action.type) {
@@ -29,6 +35,7 @@ export function auth(state = defaultState.auth, action) {
       return state;
   }
 }
+
 //ADVERTS 
 export function adverts(state = defaultState.adverts,action) {
   if (action.type === ADVERTS_LOADED_SUCCESS){
@@ -36,6 +43,15 @@ export function adverts(state = defaultState.adverts,action) {
   }
   return state;
 }
+
+//TAGS
+export function tags (state = defaultState.tags,action) {
+  if(action.type === TAGS_LOADED_SUCCESS){
+    return {areLoaded: true, data: action.payload };
+  }
+  return state;
+}
+
 //UI
 export function ui(state = defaultState.ui, action) {
   if (action.error) {
