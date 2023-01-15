@@ -1,4 +1,4 @@
-import { areLoadedAdverts, areLoadedTags } from './selectors';
+import { areLoadedAdverts, areLoadedTags, getAdvertSelector } from './selectors';
 import {AUTH_LOGIN_REQUEST, 
     AUTH_LOGIN_SUCCESS,
     AUTH_LOGIN_FAILURE,
@@ -132,8 +132,8 @@ export const tagsLoad = () => {
     };
   };
 
-  //ADVERT DATAIL ACTIONS 
-  export const advertLoadedSucces = (advert) => ({
+  //ADVERT DETAIL ACTIONS 
+  export const advertLoadedSuccess = (advert) => ({
     type: ADVERT_LOADED_SUCCESS,
     payload: advert,
   });
@@ -144,8 +144,22 @@ export const tagsLoad = () => {
   });
   export const advertLoadedRequest = () => ({
     type: ADVERT_LOADED_REQUEST,
-   
   }); 
+
+  export const advertLoad = advertId => {
+    return async function (dispatch, getState, { api }) {
+      const isLoaded = getAdvertSelector(advertId)(getState());
+      if (isLoaded) return;
+      
+      try {
+        dispatch(advertLoadedRequest());
+        const advert = [await api.adverts.getAdvert(advertId)];
+        dispatch(advertLoadedSuccess(advert));
+      } catch (error) {
+        dispatch(advertLoadedFailure(error));
+      }
+    };
+  };
 
 
   //NEW ADVERTS ACTIONS 

@@ -7,6 +7,8 @@ import Layout from '../layout';
 
 function App() {
   return (
+    <div className="app">
+      
     <Routes>
       <Route
         path="/adverts"
@@ -15,7 +17,7 @@ function App() {
             <Layout />
           </RequireAuth>
         }
-      >
+        >
         <Route index element={<AdvertsPage />} />
         <Route path="new" element={<NewAdvertPage />} />
         <Route path=":advertId" element={<AdvertPage />} />
@@ -27,6 +29,7 @@ function App() {
       <Route path="/" element={<Navigate to="/adverts" />} />
       <Route path="*" element={<Navigate to="/404" />} />
     </Routes>
+        </div>
   );
 }
 

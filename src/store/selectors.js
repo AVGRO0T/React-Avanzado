@@ -1,6 +1,5 @@
 export const getIsLogged = state => state.auth;
 
-export const getUi = state => state.ui;
 
 
 
@@ -15,5 +14,10 @@ export const areLoadedTags = state => state.tags.areLoaded;
 export const getTagsSelector = state => 
 state.tags.areLoaded ? state.tags.data : [];
 
-export const getAdvert = advertId => state =>
-  state.advert.data.find(advert => advert.id.toString() === advertId);
+
+export const getAdvertSelector = advertId => state => {
+  
+  return state.adverts.data.find(advert => advert.id === advertId) ;
+}
+
+export const getUi = state => state.ui;
