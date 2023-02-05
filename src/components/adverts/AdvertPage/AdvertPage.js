@@ -17,8 +17,6 @@ function AdvertPage() {
   const  advert  = useSelector(getAdvertSelector(advertId));
 
   const accessToken = storage.get('auth');
- 
- 
   const unmounteRef = useRef(false);
   useEffect(() => {
     if (!!accessToken){ // USADO PARA SABER SI HAY TOKEN EN EL STORAGE
